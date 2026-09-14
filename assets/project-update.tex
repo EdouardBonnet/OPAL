@@ -1,0 +1,1271 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}  
+\usepackage[T1]{fontenc}
+%\usepackage{fullpage}
+%\usepackage{natbib}
+%\setlength{\bibsep}{0.0pt}
+\usepackage[french,english]{babel}
+
+\usepackage{etoolbox}
+\apptocmd{\thebibliography}{\interlinepenalty=10000\relax}{}{}
+
+\usepackage[top=2cm, bottom=2.5cm,left=2cm,right=2cm,headsep=0.5cm,includefoot,heightrounded]{geometry}
+\setlength{\headheight}{55pt}
+\setlength{\footskip}{14pt}   
+\usepackage{amsthm,amsmath,amssymb}
+\usepackage{paralist}
+\usepackage{bm}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{textcomp}
+\usepackage{comment}
+
+\usepackage[official]{eurosym}
+
+\newcommand\eur{\euro{}\xspace}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\usepackage{titling}
+\setlength{\droptitle}{-15mm}
+
+%\usepackage[pdftex,breaklinks,colorlinks, citecolor={BlueViolet}, linkcolor={Blue},urlcolor=Maroon]{hyperref}
+\usepackage{hyperref}
+
+\makeatletter
+\newif\ifbibhighlight
+\bibhighlightfalse
+\renewcommand{\@biblabel}[1]{\ifbibhighlight\textbf{[#1]}\else[#1]\fi}
+\makeatother
+
+\makeatletter
+\let\oldthebibliography\thebibliography
+\let\endoldthebibliography\endthebibliography
+\renewenvironment{thebibliography}[1]{%
+  \oldthebibliography{#1}%
+  \setlength{\itemsep}{0pt}%
+  \setlength{\parskip}{0pt}%
+  \setlength{\parsep}{0pt}%
+}{%
+  \endoldthebibliography
+}
+\makeatother
+
+\usepackage[usenames,dvipsnames]{color}
+
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+
+\usepackage[capitalize]{cleveref}
+\usepackage{xspace}
+\usepackage{tikz}
+
+\usetikzlibrary{fit}
+\usetikzlibrary{arrows}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{math}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{trees}
+\usetikzlibrary{backgrounds}
+\usepackage{xcolor}
+
+\definecolor{amber}{rgb}{1.0, 0.75, 0.0}
+
+\newcommand{\anrrec}[1]{\emph{\textcolor{blue}{#1}}}
+\newcommand{\thoughts}[1]{\emph{\textcolor{green!50!black}{#1}}}
+
+\newcommand{\fo}{\textsf{FO}\xspace}
+\newcommand{\fodp}{\textsf{FO+DP}\xspace}
+\newcommand{\fosdp}{\textsf{FO+SDP}\xspace}
+\newcommand{\fodist}{\textsf{FO+dist}\xspace}
+\newcommand{\fodistr}{\textsf{FO+dist}}
+\newcommand{\foconn}{\textsf{FO\text{+}conn}\xspace}
+\newcommand{\maxfo}{\textsf{MaxFO}\xspace}
+\newcommand{\monmaxfo}{\textsf{Monotone MaxFO}\xspace}
+\newcommand{\mso}{\textsf{MSO}\xspace}
+\newcommand{\msoo}{\textsf{MSO$_1$}\xspace}
+\newcommand{\msot}{\textsf{MSO$_2$}\xspace}
+\newcommand{\cmso}{\textsf{CMSO}\xspace}
+\newcommand{\cmsoo}{\textsf{CMSO$_1$}\xspace}
+\newcommand{\cmsot}{\textsf{CMSO$_2$}\xspace}
+
+\newcommand\sd{\text{sd}}
+\newcommand\adj{\text{Adj}}
+
+\newcommand{\Ball}{\mathsf{Ball}}
+\newcommand{\dist}{\mathsf{dist}}
+
+\newcommand{\mw}{\mathsf{mw}}
+\newcommand{\tww}{\mathsf{tww}}
+\newcommand\tw{\mathsf{tw}}
+
+\newcommand{\mis}{\textsc{Maximum Independent Set}\xspace}
+\newcommand{\smis}{\textsc{MIS}\xspace}
+
+\newcommand{\Oh}{\mathcal{O}}
+
+\usepackage{framed}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\usepackage{refcount}   
+\usepackage{xparse}    
+\ExplSyntaxOn
+\NewDocumentCommand{\refnosec}{m}
+ {
+  \tl_set:Nx \l_tmpa_tl { \getrefnumber{#1} }    
+  \regex_replace_once:nnN { \A [^.]+ \. } { } \l_tmpa_tl 
+  \hyperref[#1]{\tl_use:N \l_tmpa_tl}             
+ }
+\ExplSyntaxOff
+
+\newlength{\RoundedBoxWidth}
+\newlength{\GrayBoxTextWidth}
+\newsavebox{\GrayRoundedBox}
+
+\newenvironment{GrayBox}[1]
+{\setlength{\RoundedBoxWidth}{\columnwidth}
+ \setlength{\GrayBoxTextWidth}{\dimexpr\RoundedBoxWidth-2\FrameSep\relax}
+ \def\boxheading{#1}
+ \begin{lrbox}{\GrayRoundedBox}\begin{minipage}{\GrayBoxTextWidth}\ignorespaces}
+{\end{minipage}\end{lrbox}
+ \begin{center}
+ \begin{tikzpicture}
+  \node[draw=black!20,fill=white,rounded corners,inner sep=\FrameSep,text width=\GrayBoxTextWidth,align=left] (Text) {\usebox{\GrayRoundedBox}};
+  \node[fill=white,rounded corners=1pt,inner xsep=6pt,inner ysep=1pt,anchor=north west] at ([xshift=\FrameSep,yshift=.5\baselineskip]Text.north west) {\boxheading};
+ \end{tikzpicture}
+ \end{center}}
+
+\newenvironment{defproblemx}[1]{\noindent\ignorespaces
+\FrameSep=5pt
+\parindent=0pt
+\vspace*{-1.5em}
+\begin{GrayBox}{#1}
+\begin{tabular*}{\columnwidth}{!{\extracolsep{\fill}}@{\hspace{.1em}} >{\itshape} p{1.5cm} p{0.86\columnwidth} @{}}
+}{
+\end{tabular*}
+\end{GrayBox}
+\ignorespacesafterend
+\vspace*{-0.5em}
+}
+
+\newcommand{\problemTask}[3]{
+\begin{defproblemx}{#1}
+\emph{Input:} & #2 \\
+\emph{Goal:} & #3
+\end{defproblemx}
+}
+
+\usepackage[framemethod=TikZ]{mdframed}
+
+\mdfdefinestyle{questionstyle}{
+  middlelinecolor=white,
+  backgroundcolor=red!20,
+  roundcorner=10pt,
+}
+
+\mdfdefinestyle{solvedquestionstyle}{
+  middlelinecolor=white,
+  backgroundcolor=red!7,
+  roundcorner=10pt,
+}
+
+\mdfdefinestyle{metaquestionstyle}{
+  middlelinecolor=white,
+  backgroundcolor=blue!20,
+  roundcorner=10pt,
+}
+
+\mdfdefinestyle{conjecturestyle}{
+  middlelinecolor=white,
+  backgroundcolor=purple!20,
+  roundcorner=10pt,
+  skipabove=0pt,
+  skipbelow=0pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+}
+
+\mdfdefinestyle{solvedconjecturestyle}{
+  middlelinecolor=white,
+  backgroundcolor=purple!7,
+  roundcorner=10pt,
+  skipabove=0pt,
+  skipbelow=0pt,
+  innertopmargin=6pt,
+  innerbottommargin=6pt,
+}
+
+\newtheorem{quest}{Question}
+\newenvironment{question}
+  {\begin{quest}\begin{mdframed}[style=questionstyle]}
+  {\end{mdframed}\end{quest}}
+
+\crefname{question}{Question}{Questions}
+\crefname{quest}{Question}{Questions}
+
+\newtheorem{solved-quest}[quest]{Question}
+\newenvironment{solved-question}
+  {\begin{solved-quest}\begin{mdframed}[style=solvedquestionstyle]}
+  {\end{mdframed}\end{solved-quest}}
+
+\crefname{solved-question}{Question}{Questions}
+\crefname{solved-quest}{Question}{Questions}
+
+\newtheorem{metaquest}{Meta-question}
+\newenvironment{metaquestion}
+  {\begin{metaquest}\begin{mdframed}[style=metaquestionstyle]}
+  {\end{mdframed}\end{metaquest}}
+
+\crefname{question}{Question}{Questions}
+\crefname{quest}{Question}{Questions}
+
+\newtheorem{conj}{Conjecture}
+\newenvironment{conjecture}[1][]
+{
+  \if\relax\detokenize{#1}\relax\begin{conj}\else\begin{conj}[#1]\fi
+  \begin{mdframed}[style=conjecturestyle]
+}
+{
+  \end{mdframed}\end{conj}
+}
+
+\crefname{conjecture}{Conjecture}{Conjectures}
+\crefname{conj}{Conjecture}{Conjectures}
+
+\newtheorem{solved-conj}[conj]{Conjecture}
+\newenvironment{solved-conjecture}[1][]
+{
+  \if\relax\detokenize{#1}\relax\begin{solved-conj}\else\begin{solved-conj}[#1]\fi
+  \begin{mdframed}[style=solvedconjecturestyle]
+}
+{
+  \end{mdframed}\end{solved-conj}
+}
+
+\crefname{solved-conjecture}{Conjecture}{Conjectures}
+\crefname{solved-conj}{Conjecture}{Conjectures}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+
+\pagestyle{fancy}
+\fancyhf{}
+
+\cfoot{\thepage}                
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \cfoot{\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+\newcommand{\jf}[1]{\noindent{\bf {\color{green!40!black}{\sc JF:}  #1}}}
+\newcommand{\alantha}[1]{\noindent{\bf {\color{magenta!80!black}{\sc Alantha:}  #1}}}
+\newcommand{\remi}[1]{\noindent{\bf {\color{green!80!black}{\sc Rémi:}  #1}}}
+\newcommand{\michael}[1]{\noindent{\bf {\color{orange!80!black}{\sc Michael:}  #1}}}
+\newcommand{\giannos}[1]{\noindent{\bf {\color{violet}{\sc Giannos:}  #1}}}
+\newcommand{\florian}[1]{\noindent{\bf {\color{yellow!60!black}{\sc Flo:}  #1}}}
+
+
+
+\newcommand{\eb}[1]{\noindent{\bf {\color{blue}{\sc ÉB:}  #1}}}
+
+\lhead{ANR AAPG 2026 \\
+Coordinated by: Édouard Bonnet\\
+Axe E.01 : Fondements du numérique}
+\chead{\textbf{OPAL}\\
+~\\
+}
+\rhead{Funding instrument: PRC\\
+Duration: 4 years\\
+}
+
+
+
+% Author macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{Optimality Program for Algorithms and Logics}
+
+\author{}
+\date{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+\thispagestyle{fancy}
+
+\vspace{-2.5cm}
+
+\paragraph{Summary of the project.} 
+This project develops a~coherent research program around two foundational questions on the limits of efficient computation, at the interface of algorithms, logic, and graph structure.
+It explores the limits of efficient algorithms, and asks how expressive a logic can be while retaining tractability.
+
+Our first goal is to achieve a~quantitative understanding of the provably optimal algorithms for fundamental computational problems, and especially for problem classes definable in \textbf{logical frameworks}.
+This is the \textbf{optimality program for algorithms}.
+Our focus is on graph algorithms, through the lens of \textbf{parameterized and approximation algorithms}, while not limited to these paradigms.
+This mobilizes, on the one hand, classic and emerging algorithmic tools, and on the other hand, recent developments in fine-grained complexity.  
+
+The second goal is to establish how general a~logic can be while retaining efficient algorithms for the class of problems it defines. 
+This is the \textbf{optimality program for logics}.
+The methodological ingredients are largely the same, except that logic plays a~more central role.   
+As we explore various classes of graphs, our goals go hand-in-hand with a~deeper understanding of \textbf{structural graph theory}.
+
+Both goals cut across our three tasks, each subdivided into two subtasks.
+Task~\refnosec{task:1} develops \textbf{algorithmic meta-theorems}, such as Courcelle's theorem, in a~fine-grained setting, with subtask~\refnosec{subtask:1.1} focusing on the second goal (optimality program for logics) and subtask~\refnosec{subtask:1.2} on the first (optimality program for algorithms).
+Tasks~\refnosec{task:2} and~\refnosec{task:3} apply our program to the two main directions beyond the celebrated graph minor theory (relevant to subtask~\refnosec{subtask:1.1}).
+Task~\refnosec{task:2} concerns \textbf{classes excluding an induced minor}, which have recently gained prominence but remain poorly understood.
+Task~\refnosec{task:3} addresses \textbf{new width parameters}, such as twin-width and merge-width, and \textbf{monadically dependent classes}, which form the broadest family conjectured to admit efficient first-order model checking, and beyond which the problem is known to become intractable.
+
+The tasks jointly lay the foundations for a~\textbf{modern logic-based theory of provably tight graph algorithms}.
+The consortium brings together the right range of expertise to tackle this ambitious challenge, and is already at the forefront of the relevant areas: algorithmic model theory, approximation and parameterized algorithms, fine-grained complexity, and new width parameters.
+
+%\giannos{I think the summary fulfils its purpose: give a very global overview of what the project is about.}
+
+\medskip
+
+\textbf{Organization.}
+As a~slight modification of the proposal template, we merge ``I. a. Objective'' and ``I.~b. Position'' into~\cref{sec:objectives}, and we move ``I. c. Methodology'' to a~separate~\cref{sec:risk}.
+This is because, due to the nature of our research, the objectives and state of the art are inseparable, and because we wish to avoid overly deep nesting of sections and subsections.
+The rest of the structure follows the template.
+
+\section{Context, positioning and objectives of the project}\label{sec:objectives}
+
+%\michael{I could not resist adding a short discussion here, even though we are pressed for space, because I think jumping into technical stuff from the beginning is a bad idea. Feel free to modify/shorten/remove.}
+
+Tracing the \textbf{limits of efficient computation} is one of the core
+foundational goals of theoretical computer science. This project proposes
+to advance our understanding of this key topic by using tools from
+\textbf{logic}, \textbf{graph structure}, \textbf{approximation}, and
+\textbf{fine-grained} and \textbf{parameterized complexity}. 
+%\giannos{I am wondering if in the next couple of sentences we get kinda technical. Maybe we could simplify (I feel that one could get lost, since we have 2 sentences in 5 lines). For example, just mention that logic is there to describe problems, structure is there to capture tractability and these two tie together explaining tractability.}
+%\giannos{Maybe we can go like this: ``One of the most natural ways to formally express a computational problem is via a logical formula describing it. Also, in many cases, efficiency of algorithms is closely related to the structure of the inputs of the problems that these procedures solve. The tractability of problems under such descriptive and structural conditions is typically leveraged to \emph{algorithmic meta-theorems}. These are statements of the form: every problem definable in a logic $\mathcal{L}$ can be solved efficiently in structures from a class $\mathcal{C}$ (see the paragraphs below for definitions and examples). Algorithmic meta-theorems are salient mathematical statements of deep \textbf{foundational} nature, not only because of their power in \textbf{unifying} and \textbf{abstracting algorithmic results} but also of the \textbf{new algorithmic techniques and results} they enable.''}
+%\giannos{if you like the above, it can replace the following paragraph.}
+The interplay between efficient computation, logic, and graph structure is a well-developed area, exemplified by landmark results such as Courcelle's theorem.
+A~standard approach is to identify a~\textbf{class of problems} definable in a~given logic, a~\textbf{class of inputs} characterized by parameters such as treewidth, and an algorithm that solves \textbf{all} problems in the former class on every input in the latter.
+Results of this kind, known as \textbf{algorithmic meta-theorems}, unify problem-specific techniques, yield broad tractability results, and help delineate the boundaries of efficient computation.
+
+%The study of the
+%interplay between efficient computation, logic, and graph structure is of
+%course a well-developed topic, as exemplified by celebrated results, such as
+%Courcelle's theorem. The standard approach here is to identify a \textbf{class
+%of problems}, defined by expressibility in some logic; a \textbf{class of
+%inputs}, defined using parameters from graph theory, such as treewidth; and to
+%formulate an algorithm that solves \textbf{all} problems from the class when
+%the input has moderate values of the parameter. Such a result, known in the
+%literature as an \textbf{algorithmic meta-theorem} allows one to greatly
+%generalize problem-specific techniques to large classes of problems and hence
+%delineate the limits of what is computationally possible.
+%\giannos{Maybe we should stress that meta-theorems not only unify and abstractize but also give new results and approaches.}
+
+This project aims to open new directions in this area by ($i$) employing tools that have so far seen limited use in this context, notably \textbf{fine-grained complexity} and \textbf{approximation}; ($ii$) investigating directions motivated by recent developments, notably the theory of \textbf{induced minors} and new \textbf{graph width measures}; and ($iii$) leveraging the leading and complementary \textbf{expertise} of the partners across these topics.
+We organize our investigation around a series of basic questions:
+
+\begin{enumerate}
+
+\item Can we refine and extend the theory behind classic algorithmic meta-theorems?
+The current landscape is framed in coarse dichotomies (FPT versus intractability, or \fo versus \mso), but these hide important tradeoffs between algorithmic efficiency, expressive power, and generality of the input classes.
+We ask two main questions in this direction.
+First, can we pinpoint the \textbf{most general} logics that still admit tractable algorithms on given classes of inputs?
+Second, can we \textbf{precisely} characterize the \textbf{best possible} complexity guarantees achievable for problems definable in these logics?
+We pursue these two directions in subtask~\refnosec{subtask:1.1} and subtask~\refnosec{subtask:1.2}, respectively.
+Together, they form Task~\refnosec{task:1}, whose goal is to initiate an \textbf{optimality program} for algorithms and logic that we further develop in tasks~\refnosec{task:2} and~\refnosec{task:3}.
+
+  %Can we make algorithmic meta-theorems \textbf{better}?
+%\giannos{I am not sure if what we want is to make them ``better''. I mostly see the current state of the art lacking in fine-grained aspects: we shouldn't be happy with the current situation concerning mostly ``FO vs MSO'' and ``FPT vs not-FPT''. Metaphorically, there is a whole palette of colors between black and white and we should explore it. Should we rephrase the question to sth like: "How can optimality be distilled/captured to meta-theorems?" or "What is the meta-theoretic aspect of optimality?"}
+%Here, we focus on
+%existing meta-theorems \giannos{I do not see it as focusing on existing meta-theorems (and, in a sense, improving them) but rather being inspired from them to build a logic-based algorithmic theory (to put it in the superlative). maybe the first question can be "Can we identify logics that express tractability in different structural/algorithmic settings?"} and pose two questions: Can we make their corresponding
+%logic more expressible, thereby covering a larger class of problems, without
+%sacrificing tractability?  Alternatively, can we \textbf{precisely} pinpoint
+%the \textbf{best} complexity performance that can be obtained in the context of
+%our meta-theorems? We explore these directions in
+%subtask~\refnosec{subtask:1.1} and subtask~\refnosec{subtask:1.2} respectively.
+%Together these directions form Task~\refnosec{task:1}, whose goal is to develop
+%an \textbf{optimality program} for algorithms and logic.
+
+\item How can we best leverage \textbf{induced-minor theory} algorithmically?
+Our focus on \textbf{induced} minors is motivated both by the historical role of graph minors in the study of sparse classes and by recent progress suggesting that induced minors may hold a~deep and fruitful structural and algorithmic theory.
+We devote Task~\refnosec{task:2} to the investigation of meta-theorem techniques for the induced-minor relation.
+Task~\refnosec{task:3} explores the other main (far-reaching) generalization of minor-free classes: monadically dependent classes.
+
+%How can we best leverage \textbf{induced minor theory} algorithmically?
+%Motivated by the historical connection between graph minor theory and the
+%sparsity program for \fo logic, but also by recent exciting developments in the
+%study of \textbf{induced} minors, we intend to devote Task~\refnosec{task:2} to
+%the investigation of meta-theorem techniques based on the induced-minor
+%relation. \giannos{A very evil reviewer could maybe ask: why induced minors and not something else? Maybe already here we can answer to this by stressing that this seems to be a right angle to build a "graph-minor"-like theory for dense classes, in the sense that we can have a rich structural and algorithmic toolbox, that is the basis of meta-theorems. There are also big questions for induced minors and we aim to approach this area from/towards a meta-algorithmic angle. Maybe we could write sth like: we believe that structural and algorithmic aspects of induced minors exhibit a large meta-algorithmic potential and our work is fuelled by this viewpoint.}
+
+\item What are the limits of efficient computation for \textbf{new graph widths} such as twin-width and merge-width, which lie at the frontier of tractability for \fo logic?
+In Task~\refnosec{task:3}, we investigate \textbf{fine-grained complexity} and \textbf{approximation} questions for these recent but highly promising structural parameters, and more generally for \textbf{monadically dependent classes} (and beyond).
+Our guiding perspective is meta-theoretic: such questions are tightly connected to the advancement of algorithmic meta-theorems for \fo and its variants, and should be studied in tandem with them.
+
+ % What are the limits of efficient computation for \textbf{new graph widths} such as twin-width and merge-width, which lie at the frontier of
+%tractability for \fo logic? In particular, we devote Task~\refnosec{task:3} to
+%exploring \textbf{fine-grained} complexity and \textbf{approximation} questions
+%related to these relatively new but very promising structural parameters.
+%\giannos{I am not sure about my next comment. One (evil again) reviewer could maybe ask: do you just pick a notion related to FO and you then forget about meta-theorems and just prove perhaps unrelated results for these notions? The answer I guess is no: we always have meta-theorems in the back of our head and a meta-theoretic approach should definitely go hand-in-hand with particular algorithmic advancements. We may just add the following: Such questions are in an organic relation with the advancement of meta-theorems for \fo and its variants.}
+
+\end{enumerate}
+
+All in all, the tasks outlined above draw the broad contours of an optimality program: we are looking to move far beyond the state of the art by looking for meta-theorems that are as general as possible in the problems they cover (subtask~\refnosec{subtask:1.1}) and in the types of input structure they build on (Tasks~\refnosec{task:2} and~\refnosec{task:3}); and for which any complexity-theoretic barriers to further progress can be clearly articulated (subtask~\refnosec{subtask:1.2}).
+
+\subsection{Task 1: Optimality program in algorithmic meta-theorems}\label{task:1}
+
+%One of the most natural ways to formally express a computational problem is via a logical formula describing it. Also, in many cases, efficiency of algorithms is closely related to the structure of the inputs of the problems that these procedures solve. The tractability of problems under such descriptive and structural conditions is typically leveraged to \emph{algorithmic meta-theorems}. These are statements of the form: every problem definable in a logic $\mathcal{L}$ can be solved efficiently in structures from a class $\mathcal{C}$ (see the paragraphs below for definitions and examples). Algorithmic meta-theorems are salient mathematical statements of deep \textbf{foundational} nature, not only because of their power in \textbf{unifying} and \textbf{abstracting algorithmic results} but also of the \textbf{new algorithmic techniques and results} they enable.
+
+The current state-of-the-art in algorithmic meta-theorems lacks in two principal aspects: the understanding of the different logical and structural conditions that induce meta-algorithmic settings as well as tight algorithmic complexities. These two \textbf{fine-grained aspects} are deeply interconnected and shape the main theme of this task. We start with some basic background on logics and meta-theorems. 
+% Before presenting the challenging questions that arise in these directions, we first present a basic background on logics and meta-theorems.
+
+
+\paragraph{The logics \fo and \mso.}
+Our focus is on logics on graphs that are undirected, without multiple edges or loops.
+Arguably the main logic (on graphs) is \emph{first-order logic} (\fo).
+Formulas of first-order logic have (vertex) variables corresponding to vertices of the graph and are built by closing atomic formulas of the form $x=y$ and $E(x,y)$ (where the symmetric and irreflexive relation $E(\cdot,\cdot)$ encodes the edge set) under Boolean connectives ($\lor,\land,\neg$) and existential and universal quantification $\exists x$ and $\forall x$.
+In \fo, one can express graph properties like the existence of a fixed-size subgraph, independent set, dominating set, etc; e.g., the existence of a~dominating set of size at~most $k$ can be expressed by the \fo formula $\exists x_1 \ldots \exists x_k \forall y \bigvee_{i=1}^k \big((x_i=y)\lor E(x_i,y)\big)$.
+The \fo logic can only express \emph{local properties}; e.g., the existence of a~path (of unbounded length) joining two fixed vertices is not definable in \fo.
+%More generally, properties like connectivity and planarity are (provably) not expressible in \fo. 
+    
+A logic with significantly larger expressive power than \fo is \emph{monadic second-order logic} (\mso).
+This logic extends \fo by allowing the existential and universal quantification over \emph{set variables} corresponding to \emph{subsets of vertices} and the extra atomic formula $x \in X$ for a~vertex variable $x$ and set variable $X$.
+The ability to quantify over sets (of vertices) allows \mso to go well beyond expressiveness of \fo and encode many global graph properties like connectivity or planarity.
+
+The \cmsot logic extends \mso in two directions: one can quantify over edge subsets, and there is a~vertex-edge incidence predicate (this is the 2), and counting predicates are added, allowing constraints of the form $|X| \equiv i \pmod p$ for fixed integers $p \geqslant 2$ and $0 \leqslant i < p$ (this is the \textsf{C}). 
+
+\paragraph{Algorithmic meta-theorems for \fo and \mso.}
+In the field of parameterized complexity, a~prototypical \emph{algorithmic meta-theorem} asserts that for a~logic $\mathcal{L}$ and a~graph class $\mathcal{C}$, the \emph{model-checking problem}, that is, deciding whether a~given graph $G\in \mathcal{C}$ satisfies a~given formula $\varphi \in \mathcal{L}$, denoted by $G \models \varphi$, can be solved in time $\Oh_{|\varphi|,\mathcal{C}}(1) \cdot |V(G)|^{\Oh(1)}$; such an algorithm is called an \emph{efficient model checking}, and we also say that $ \mathcal{C}$ is \emph{tractable} (for $\mathcal{L}$).
+(We use the notation $\Oh_y(g(x))$, where $y$ can be a~tuple of variables, for at~most $f(y) g(x)$ for some function~$f$.) 
+More generally, it is any algorithm that works for every problem definable in some logic, rather than only for some specific problem.
+
+The most classic algorithmic meta-theorem is the celebrated \emph{Courcelle's theorem}~\cite{Courcelle90}, which states that bounded-treewidth classes are tractable for \mso (even for \cmsot); this has been extended to bounded cliquewidth for \cmso~\cite{CourcelleMR00}.
+%(for the purpose of this proposal, it is enough to think of treewidth as a measure of tree-likeness of a graph --  trees and paths have treewidth one, while the class of all grid-graphs or, more generally, planar graphs have unbounded treewidth).
+As for \fo, the quest for classes beyond bounded treewidth that admit efficient model checking has been an active and fruitful research direction which has recently enjoyed major successes~\cite{GroheKS17dec,twin-width1,twin-width4,DreierEMMPT24mcstable,DreierT25}; see~Task~\refnosec{task:3}. 
+
+
+\subsubsection{Algorithmic meta-theorems for \fo extensions}\label{subtask:1.1}
+Recently there has been a~shift in studying extensions of \fo on graphs, aiming to express problems that are not \fo-definable but can still give algorithmic meta-theorems beyond classes of bounded treewidth or cliquewidth.
+An illustrative example is \foconn (or \emph{separator logic}) introduced in~\cite{Bojanczyk21separ,SchirrmacherSV22first}, which is an extension of \fo allowing the use of the \textit{connectivity predicate}
+$conn_k(x,y,z_1,\ldots,z_k)$ which evaluates to true if there is a path in the graph from $x$ to $y$ that avoids $z_1,\ldots,z_k$.
+This logic was shown to admit efficient model checking on topological-minor-free classes~\cite{PilipczukSSTV22algor}; these classes essentially forbid the existence of a fixed number of vertices that are pairwise connected via internally vertex-disjoint paths (generalizing the notion of minors).
+Subsequent works focused on getting further extensions of \fo and
+% \fo (more expressive than
+\textsf{FO\text{+}conn}
+% , like the \emph{disjoint-paths logic}~\cite{SchirrmacherSSTV24mode}, \emph{$\Theta$-logic}~\cite{FominGSST24comp}, \emph{low bidimensionality \mso}~\cite{SauST25para}, and \emph{low rank \mso}~\cite{BojanczykPPSS25lowrank} 
+and showing efficient model checking for the majority of them~\cite{SchirrmacherSSTV24mode,FominGSST24comp,SauST25para,BojanczykPPSS25lowrank}.
+
+% The viewpoint of such results is either \emph{property-oriented} (Separator logic aimed to express graph connectivity) or \emph{problem-oriented} (Disjoint-paths logic and $\Theta$-logic aimed to express linkability and modification problems).
+Our principal goal is to \emph{systematically explore} the tractability frontier of the model checking problem for different logics on restricted
+graph classes. 
+The general driving question is the following:
+
+\begin{metaquestion}\label{q:enrich}
+For every tractable class $\mathcal C$, what predicates can enrich \fo while preserving efficient model checking on $\mathcal C$?
+\end{metaquestion}
+
+We plan to study this question through two different ways of extending \fo: by adding predicates, and by allowing quantification over restricted sets.
+We will also pursue the complementary perspective: for selected extensions of \fo, we will ask which graph classes form the most general tractable family.
+We believe that both viewpoints can yield fruitful insights into the connections between graph classes and logics.
+
+% We now give some specific questions that we aim to study.
+
+\paragraph{Logics for sparse classes.}
+Minor-free classes are arguably among the most studied classes in algorithmic and structural graph theory.
+Recent works have shed light on \emph{logically} understanding several structural and algorithmic aspects of Graph Minors
+% ~series of \fo extensions and meta-theorems for minor-free classes
+\cite{GolovachST23,FominGSST24comp,SauST25para}. However, most of the obtained
+% While these logics are able to express different notions from Graph Minor theory, most of these 
+meta-theorems have been extended to topological-minor-free classes~\cite{SchirrmacherSSTV24mode,SauSSSTV26}.
+Therefore, it is currently unclear whether there is a logic whose tractability is delimited by minor-freeness. 
+
+To answer this question, one may consider tweaking \foconn.
+For example, \emph{color-connectivity logic} is a~variant of \foconn on colored graphs, where the connectivity predicate now requires the path between $x$ and $y$ to be monochromatic.
+
+\begin{question}\label{q:color-conn}
+    Does color-connectivity logic admit efficient model checking on minor-free classes?
+\end{question}
+Recent work on minor-free classes~\cite{BuffiereLNOS26char} has strong potential to lead to a~positive answer. 
+However, the logic is expressive enough that such an algorithm beyond minor-free classes would be surprising.
+
+\medskip
+
+Another approach, which considers logics with restricted set quantifications, was introduced in~\cite{SauST25para}.
+There, set quantification is allowed on sets that forbid certain routing behaviour through them.
+% (expressed in terms of excluding some graph as a \emph{rooted minor}).
+\emph{Low flow \mso} is the \mso fragment where  quantification is allowed only on sets $X$ for which the maximum number of pairwise-disjoint paths in $G$ with both endpoints in $X$ is at~most some fixed constant.
+% Understanding the tractability of low flow \mso may provide some insights on logical aspects of graph classes. 
+
+\begin{question}\label{q:lfmso}
+    For which tractable classes for \fo can we extend tractability to low flow \mso?
+\end{question}
+
+This was already done for minor-free classes~\cite{SauST25para} and extended to topological-minor-free classes~\cite{SauSSSTV26}.
+The principle of restricted set quantification suggested in~\cite{SauST25para} yields a~template for various extensions of \fo (or rather, \mso fragments), via different parameters used on vertex subsets.
+%Another example is to allow quantification only on sets that exclude a~large path as a~rooted minor.
+We believe that this template could provide \emph{the} logic for (some of) the graph classes arising in sparsity theory~\cite{NesetrilM12spar}.
+
+\paragraph{Dense analogues of (topological-)minor-free classes.}
+As explained in Task~\refnosec{task:3}, the study of the tractability limits of \fo gave exciting new developments in the \emph{dense} counterpart of sparsity theory~\cite{NesetrilM12spar}.
+% ; see Task~\refnosec{task:3}.
+% mentioned above.
+This line of research led to introducing
+% e quest for a dense analogue of (topological-)minor-free classes %, which is far better understood for other key sparse classes.
+% motivated introducing
+\emph{low rank \mso}~\cite{BojanczykPPSS25lowrank}, a fragment of \mso in which set quantification is restricted to vertex sets of bounded cutrank (i.e., with a~bounded number of adjacency profiles).
+This logic was shown to be equivalent to \foconn on \emph{weakly sparse classes}~\cite{BojanczykPPSS25lowrank} (i.e. forbidding  certain complete bipartite graphs as subgraphs), therefore inheriting efficient model checking in the sparse setting.
+The emerging challenge is to study tractability of this logic on dense classes.
+
+\begin{question}\label{q:lrmso}
+    In which dense classes does low rank \mso admit efficient model checking?
+\end{question}
+Since this logic is a~fragment of \mso and due to the results in~\cite{CourcelleMR00}, the interesting cases are \emph{hereditary} (i.e., closed under vertex deletion) classes of unbounded cliquewidth.
+Motivated by the connection between \foconn and low rank \mso, we conjecture that a tight answer to the above question is given by the dense version of topological-minor-freeness. Decompositions based on bounded rank cuts and notions related to \emph{rankwidth}~\cite{Oum17rank} are expected to be of key importance in the study of the above question, with their own structural and algorithmic interest. 
+
+\paragraph{Logics for induced minors.}
+Another regime that we aim to work on is that of \emph{induced minors}, the subject of Task~\refnosec{task:2}, which are graphs obtained after a~series of vertex deletions and edge contractions (but unlike minors, edge deletions are disallowed).
+While the questions related to their structural and algorithmic theory will be discussed later, here we would like to mention one main difference:
+while detecting a~minor can be done in almost-linear FPT time~\cite{KorhonenPS24}, there are fixed graphs (even trees~\cite{KorhonenL24}) that are NP-hard to find as induced minors in general graphs.
+Motivated by the challenging problem of identifying which classes allow a~fast detection of induced minors, we plan to study logics expressing induced minor containment and algorithmic meta-theorems thereof (also see~subtask~\refnosec{subsec:ind-min}).
+
+From a logical viewpoint, induced minor containment is very similar to minor containment: it is not expressible in bare \fo.
+In the case of minors (or rather topological minors), this shortcoming led to \emph{disjoint-paths logic} (\fodp), introduced in~\cite{SchirrmacherSV22first}.
+This logic extends \fo by allowing the use of the disjoint-paths predicate $\text{dp}_k(u_1,v_1, \ldots, u_k,v_k)$ which holds if there are $k$ vertex-disjoint paths $P_1,\ldots, P_k$ such that $P_i$ is \mbox{a~$u_i$--$v_i$} path for every $i$.
+In order to get a finer control over the distances between the paths, \fodp was further extended~\cite{GolovachST23} to allow fixing a~minimum distance between the paths, giving the \emph{scattered disjoint-paths logic} (\fosdp).
+Combining the predicates of \fodp and \fosdp to a~single more general predicate, one can express the induced minor containment.
+
+When it comes to tractability, for \fodp we have a full characterization in subgraph-closed classes, given by topological-minor-freeness~\cite{SchirrmacherSSTV24mode}. For \fosdp, tractability is established only up to bounded-genus graphs~\cite{GolovachST23}.
+Still, tractability of \fosdp and its proposed extension can, a~priori, go beyond classes of bounded genus, leaving room for classes where induced-minor containment is tractable.
+
+\begin{question}\label{question:fosdp}
+    Does (the extended) \fosdp admit efficient model checking on minor-free classes?
+\end{question}
+The difficulty in settling this question comes from lifting the rerouting arguments in~\cite{GolovachST23} to work on almost-embeddable graphs.
+In the same spirit, one may consider the scattered variant of \foconn by modifying the connectivity predicate to ask for a~path $P$ connecting $x$ and $y$ with no edge between~$P$ and the vertices $z_1,\ldots,z_k$. 
+
+\begin{question}\label{q:sfoconn}
+    Which classes are tractable for the scattered variant of \foconn?
+\end{question}
+We are interested in this question for several reasons.
+First, as for their non-scattered variants, we expect these two logics to enjoy similar meta-theorems.
+Understanding the tameness (in terms of graph classes) of the scattered \foconn seems to be the major step toward grasping the corresponding tameness of \fosdp.
+Also, studying the scattered notion of connectivity defined by this logic is of strong independent interest (see e.g. the emerging  \emph{coarse graph theory}~\cite{GeorgakopoulosP25}).
+This logic also seems to be connected with \emph{vertex minors}, another ``minor-like'' notion of containment that is well-suited for dense graphs~\cite{BuffiereKOdM24}.
+% and can be expressed in \cmsot. 
+% The \cmsot logic extends \mso in two directions: one can quantify over edge subsets, and there is a~vertex-edge incidence predicate (this is the 2), and counting predicates are added, allowing constraints of the form $|X| \equiv i \pmod p$ for fixed integers $p \geqslant 2$ and $0 \leqslant i < p$ (this is the \textsf{C}). 
+Identifying the extension of \fo that allows expressing vertex-minor containment and studying meta-theorems about this logic is another ambitious goal that we would like to carry out.
+
+\paragraph{Parametric dependence of meta-theorems.}
+Apart from the logical and combinatorial dimension of meta-theorems, there is a third dimension: the one of efficiency. While most meta-theorems come with an immense dependence on the size of the formula in their running times, we would like to further understand whether and when it is possible to get improved bounds.
+
+A first level of distinction is between \emph{elementary} and \emph{non-elementary} dependences, where the former translates to \textit{fixed} (independent of $\varphi$) towers of exponentiation.
+% (compared to non-elementary, where the height of the tower depends on $\varphi$).
+In subgraph-closed classes, elementary \fo model checking is fairly understood~\cite{GajarskyPSST24elem}, while for hereditary classes this is still open.
+We believe that there is more at stake than answering this challenging question.
+In particular, we would like to track elementary running times in different meta-algorithmic regimes.
+% Here are some questions that we would like to answer.
+
+\begin{question}\label{q:elem2}
+    Is there a~variant of twin-width that characterizes \textsl{elementary} \fo model checking on hereditary classes of ordered graphs?
+\end{question}
+
+% \begin{question}\label{q:treerank}
+%     Which \fo extensions admit elementary model checking on bounded tree rank classes?
+% \end{question}
+Adopting a more fine-grained approach, we are also interested in going further than the distinction between elementary and non-elementary running times, by focusing on specific parametric dependences, say single or double exponential.
+\begin{metaquestion}\label{metaq:singleexp}
+    Which logic admits single-exponential FPT model checking on a given class~$\mathcal{C}$?
+\end{metaquestion}
+The ultimate goal here is to find for some fixed class $\mathcal{C}$, a~logic that \emph{characterizes} model checking on $\mathcal{C}$ within certain running times, e.g. single-exponential FPT.
+A meta-theorem of this kind is the one of Pilipczuk~\cite{Pilipczuk11}, which shows that for bounded treewidth graphs the famous Cut\&Count technique is captured by a variant of modal logic called \emph{existential counting modal logic} (ECML). 
+% (with some variant also ~\cite{BergougnouxCS26}).
+
+\subsubsection{Fine-grained complexity of meta-theorems}\label{subtask:1.2}
+
+
+One of the main ingredients of this project is the use of \textbf{fine-grained}
+computational complexity theory. Whereas traditional complexity theory uses
+standard conjectures (e.g. P\,$\neq$\,NP) to prove qualitative lower bounds for
+various problems (e.g. that \textsc{Independent Set} cannot be solved in
+polynomial time), fine-grained complexity relies on more precise hypotheses to
+obtain \textbf{quantitative} lower bounds (e.g. that \textsc{Independent Set}
+cannot be solved in time $2^{o(n)}$ under the ETH or in time
+$1.99^{\textrm{tw}}n^{\Oh(1)}$, where $\textrm{tw}$ is the graph's treewidth,
+under the SETH).
+%\jf{I believe this paragraph could be moved earlier in order to explain what we want to do.}\michael{I don't disagree, but it's not clear where else to put it.}
+The first application of this framework in our context will be in proving precise lower bounds on the complexity of both specific problems and model-checking (that is, meta-theorems). In other words, we intend to tackle questions of the following form:
+
+\begin{metaquestion}
+  Can we prove the optimality of our meta-theorems by showing tight lower bounds under fine-grained complexity hypotheses such as (S)ETH?
+\end{metaquestion}
+
+This question is of clear interest to our project: the development of
+algorithmic meta-theorems is our main objective and we want to know whether our
+algorithms are optimal. In particular, the investigation into cases allowing an
+elementary dependence on the parameters, such as in~\cref{q:elem2}, can already be seen as an embryonic type of ``fine-grained''
+question, as we are aiming for a more quantitative bound than fixed-parameter
+tractability. We want to push such questions further and try to distinguish not
+just between elementary and non-elementary, or double-exponential and
+single-exponential dependencies, but also try to determine specific constants
+in cases where single-exponential algorithms are possible.  In particular, the
+meta-theorem of Pilipczuk about ECML mentioned previously unifies numerous
+algorithmic results for treewidth that lead to single-exponential FPT
+algorithms and for many such problems \textbf{tight and precise} bounds are
+known under the SETH. Can we extend these problem-specific bounds to general
+statements about ECML-expressible problems?
+
+\begin{question}
+    Can we formulate an improved version of Pilipczuk's meta-theorem and prove its optimality under the SETH?
+\end{question}
+%\florian{Be more precise about "improved" in the statement?}
+
+Pilipczuk's meta-theorem gives algorithms of the form
+$c^{\textrm{tw}}n^{\Oh(1)}$, where $\textrm{tw}$ is the treewidth and $c$
+depends on the formula describing the problem. The goal would be to obtain
+\textbf{syntactic} conditions on the formula allowing us to determine the
+constant $c$ as tightly as possible, that is, obtain a theorem which based on
+analyzing the formula (quantifiers used, depth, width) gives a lower bound on
+the complexity of the corresponding problem. Of course, this type of question
+will be asked not only for this particular algorithmic meta-theorem, but for
+most of the meta-theorems of this project.
+
+In addition to the direction discussed above, we strongly believe that this type of investigation into the interplay between fine-grained hypotheses and logic will also be fruitful in the converse direction, in the same way that descriptive complexity theory has been a~key tool in the development of traditional complexity theory.
+In this sense, we intend to use fine-grained complexity theory in a~more ambitious way in the investigation of algorithmic meta-theorems, as explained below.
+
+In order to better understand our goal, it is instructive to think about both the current state of the art in fine-grained complexity and the historical interplay between logic and complexity theory.
+On the one hand, fine-grained complexity theory is by now a~rich field which, however, suffers from a~proliferation of different complexity hypotheses of varying plausibilities.
+Besides the obvious drawback of this situation (we are not sure which hypotheses are more credible), this renders the field much more chaotic than traditional complexity theory, because rather than having problems neatly organized into \textbf{equivalence classes}, we have a~\textbf{web of reductions} which sometimes reproves the same bounds under different assumptions.
+It would clearly be of benefit to better organize this web and understand how fine-grained complexity bounds can also be organized into equivalence classes.
+
+%Why has fine-grained complexity theory not already been organized into classes?
+%\eb{I think we can drop the following paragraph. It is not necessary to the narrative, and there are complexity classes below P where the exact model matters.}
+%One reason that fine-grained complexity has not produced a~picture as neat as that of classical complexity theory is that, in fine-grained complexity, it is less feasible to study complexity questions based on a concrete model of computation such as Turing machines.
+%Indeed, in traditional complexity theory we can neatly define classes such as NP using such machines, because the details of the model only affect things by a polynomial factor, which is irrelevant. However, such details become crucial in fine-grained complexity theory and this makes it much harder to organize problems into classes.
+
+Our approach is based on the belief that logic is an effective remedy for this
+conundrum.  In the same way that the classes of traditional complexity theory
+can be rediscovered through the lens of logic, as exemplified by the field of
+\textbf{descriptive complexity}, we believe that logical formalisms will allow
+us to discover some basic classes of fine-grained complexity.  By studying the
+fine-grained complexity of model-checking, we will obtain a two-fold payoff:
+$(i)$ we will achieve lower bounds assuring us that our meta-theorems are
+optimal and $(ii)$ we will be able to pinpoint the class of fine-grained
+questions which are \textbf{equivalent} to each hypothesis by giving a
+characterization through logical expressibility.
+
+The approach we propose above has not yet been much explored, but some early
+results exist which indicate that it has strong potential.  In particular, in
+\cite{GaoIKW19} it is shown that the $k$-OV hypothesis (stating that
+$k$-\textsc{Orthogonal Vectors} cannot be solved in time $n^{k-\varepsilon}$)
+is \textbf{equivalent} to the absence of an algorithm that model checks \fo formulas with
+$k+1$ quantifiers in time $m^{k-\varepsilon}$, where $m$ is the size of the
+input.  This type of result is \textbf{foundational}: not only does it justify
+that the (easy) $\Oh(m^k)$-time \fo model-checking algorithm is optimal, but it
+also shows that the $k$-OV hypothesis captures the complexity of \textbf{all}
+problems expressible in \fo logic with $k+1$ quantifiers, thus building a
+complexity-equivalence class.  
+
+A recent development which renders this direction particularly promising is the
+emergence of fine-grained hypotheses tailored to parameterized complexity, such
+as the pw-SETH and tw-SETH \cite{Lampis25}, which state that \textsc{SAT}
+cannot be solved in time $(2-\varepsilon)^{\textrm{w}}n^{\Oh(1)}$, where
+$\textrm{w}$ is respectively the pathwidth or treewidth of the primal graph of
+the formula.  These hypotheses succeed in building an equivalence class of
+fine-grained lower bounds for fundamental graph problems (\textsc{Independent
+Set}, \textsc{Dominating Set}, \textsc{Coloring}), when parameterized by
+pathwidth or treewidth, as well as (linear) clique-width.  A question we would
+like to tackle is whether these hypotheses have a logical characterization, and
+we believe that the correct answer is a~fragment of \fo logic where we bound
+the number of variables (rather than the number of quantifiers).  We will
+therefore attempt to establish the following conjecture:
+
+\begin{conjecture}\label{conj:twSETH}
+  The tw-SETH is false if and only if there exists $\varepsilon>0$ and an algorithm which takes as input a structure of size $m$ and an existential \fo sentence $\varphi$ with $k+1$ variables and decides if $G\models \varphi$ in time $m^{k-\varepsilon}|\varphi|^{\Oh(1)}$.
+  Furthermore, there exists an algorithm that solves this problem in time  $m^{k}|\varphi|^{\Oh(1)}$.
+\end{conjecture}
+
+If true, the conjecture above can be seen as a generalization of the result of \cite{GaoIKW19} because the \mbox{tw-SETH} is a consequence of the $k$-OV hypothesis and \fo sentences with $k$ quantifiers can only have at most $k$ variables.
+To be clear, the same variables are allowed to be quantified multiple times, and the size of~$\varphi$ may depend on~$m$; in particular, connectivity can be expressed with three variables (by a~long sentence).
+This direction is then related to the variants of \fo studied in~subtask~\refnosec{subtask:1.1}, such as \fodp.
+We note here that if an equivalence such as the one above can be established, this would imply that for a specific \fo model-checking problem we also obtain fine-grained hardness under the $k$-SUM hypothesis, following recent results \cite{Lampis26b}. 
+
+%Further questions of this type can be explored by building on the intuitions and parallels between structural parameters and classical complexity and in particular the intuition that logarithmic pathwidth ``corresponds'' to the class NL.
+%Building on the recent work of \cite{Lampis26a} we can try to generalize the result of \cite{GaoIKW19} by considering variants of \fo which capture NL, such as \fo with transitive closure.
+%In particular, we intend to attack the following conjecture:
+%
+%\begin{conjecture}
+%The following two statements are equivalent:
+%\begin{compactenum}
+%\item There exists $\varepsilon>0$ and an algorithm that solves \textsc{SAT} in time $(2-\varepsilon)^bn^{\Oh(1)}$, when supplied with a 2-\textsc{SAT} backdoor of size $b$, that is, a set of variables whose deletion turns the formula into a 2-\textsc{SAT} instance.
+%\item There exists $\varepsilon>0$ and an algorithm that can model check \fo formulas with transitive closure and $k+1$ quantifiers in time $\Oh(m^{k-\varepsilon})$.
+%\end{compactenum}
+%\end{conjecture}
+%
+%The intuition behind this question is that \cite{Lampis26a} established that the hypothesis for 2-\textsc{SAT} backdoors can be seen as a guess-and-check fine-grained equivalent of the class NL.
+%In particular, another equivalent problem is \textsc{SAT} solving when supplied with a modulator to a formula of logarithmic pathwidth.
+%We therefore believe it would be natural if hardness for \fo model checking with transitive closure could be not only based on this hypothesis, but in fact shown equivalent to it. 
+
+More broadly, we plan to investigate numerous questions about the complexity of
+\fo model checking in this spirit.  The link with fine-grained hypotheses will
+allow us to both obtain tight lower bounds for our model-checking algorithms
+and new characterizations of equivalence classes of problems for each
+hypothesis, making the first steps towards a new \textbf{fine-grained
+descriptive complexity theory}.
+
+\subsection{Task 2: Optimality program for induced-minor-free classes}\label{task:2}
+
+The theory of classes excluding a~fixed minor is one of the central achievements of structural graph theory; some of it is mentioned in subtask~\refnosec{subtask:1.1}.
+Over the past three decades, approximation and subexponential algorithms have been developed for NP-hard problems in these classes, and, more generally, algorithms with better performance guarantees than on general graphs.
+In parallel, our structural understanding has become more refined.
+This has given rise to a~beautiful theory with concrete applications.
+Its scope, however, remains limited.
+
+Sparsity theory is a~prominent offshoot of minor theory, featuring successive generalizations through polynomial expansion, bounded expansion, nowhere denseness, and monadic stability.
+This line of work has been particularly active over the last fifteen years.
+Yet even the most general family of monadically stable classes does not cover very simple graphs known as half-graphs.
+Task~\refnosec{task:3} addresses the dense generalization of this program: monadically dependent classes.    
+
+We focus here on an extension of minor theory that is incomparable with the sparsity program: \textbf{understanding classes excluding a~fixed \emph{induced} minor}.
+Unlike the classes of the sparsity program, induced-minor-free classes encompass intersection graph classes (which are of particular interest to many members of the consortium), such as interval graphs, disk graphs, segment graphs, or string graphs.
+
+The study of induced-minor-free graphs has attracted growing attention in recent years.
+A~wealth of conjectures and partial results points to the existence of a~deep underlying theory that remains to be uncovered.
+The aim of this task is to lay its foundations and resolve its central conjectures.
+
+\subsubsection{Planar induced minors}\label{subsec:planar-ind-min}
+
+There is something special in excluding a~\emph{planar} graph as an induced minor.
+Classes excluding a~planar graph as a~\emph{minor} have bounded treewidth, so on them, every \cmsot-definable problem can be solved in polynomial time.
+This cannot be expected from classes excluding a~planar induced minor; for instance, \textsc{Dominating Set} is NP-hard on graphs excluding the 5-vertex path as an induced minor.
+However, the question is wide open in the case of \mis (\smis).
+This is a~central conjecture that has given rise to dozens of partial results.
+
+\begin{solved-conjecture}[\textbf{Refuted}, Dallard--Milanič--Štorgel (DMS)~\cite{DallardMS24a}]\label{conj:dms}
+For every planar graph $H$, \mis can be solved in polynomial time on graphs excluding $H$ as an induced minor.
+\end{solved-conjecture}
+
+\textbf{Resolved negatively: \mis remains NP-hard in graphs excluding the $5 \times 5$ grid as an induced minor~\cite{BonnetC26}. The conjecture remains open if further the graphs are weakly sparse.}
+
+\medskip
+
+(In what follows, $K_t$ denotes the $t$-vertex clique, $K_{s,t}$ the biclique with $s$ vertices against $t$ vertices, $P_t$ the $t$-vertex path, $C_t$ the $t$-vertex cycle, $W_t$ the wheel obtained from $C_t$ by adding a~universal vertex.)
+\Cref{conj:dms} was shown when $H$ is $K_5$ minus an edge, $K_{2,t}$, $W_4$~\cite{DallardMS24a}, $P_6$~\cite{Grzesik22}, any windmill graph (a~matching plus a~universal vertex)~\cite{BonnetDGTW26}.
+Our intuition is that \cref{conj:dms} fails for some planar graph~$H$.
+There are, however, weakenings of DMS: namely, q-DMS and qptas-DMS, asserting the same with quasipolynomial running time and a quasipolynomial-time approximation scheme (QPTAS), respectively.
+
+We believe that qptas-DMS should hold, whereas we are less certain about q-DMS.
+Nevertheless, q-DMS has many more resolved cases than DMS. 
+For instance, DMS is open when $H = P_7$, whereas \mbox{q-DMS} is known when $H$ is any path or any cycle~\cite{Gartland21}, a~disjoint union of triangles~\cite{BonamyBDEGHTW24} and even~$tC_3~\uplus~C_4$~\cite{BonnetDGTW26}.
+Very recently, qptas-DMS was further shown when $H$ is any graph of maximum degree~2 (i.e., disjoint union of paths and cycles)~\cite{BonnetCMPR26}.
+If indeed q-DMS holds but DMS does not, one will not be able to show it via an NP-hardness proof for a~certain graph $H$ (unless NP is in QP).
+We need to rely on a~fine-grained complexity-theoretic assumption, most likely the ETH.
+
+The conjecture qptas-DMS is known to be implied by the following structural statement.
+
+\begin{conjecture}[Gartland--Lokshtanov~\cite{Gartland23}]\label{conj:GL}
+For every planar graph $H$, there is a~constant $k := k(H)$ such that every $n$-vertex $H$-induced-minor-free graph $G$ admits a~set $X \subseteq V(G)$ of size at~most~$k$ such that $N[X]$ is a~\emph{balanced separator} of $G$.
+\end{conjecture}
+ 
+\Cref{conj:GL} is known to hold when $H$ is $K_5$ minus an edge, $K_{2,t}$, $W_4$~\cite{DallardMS24a}, and has recently been shown for $tC_3$~\cite{Ahn25} and $W_t$~\cite{Chudnovsky25}.
+Improved algorithms for \smis might extend to any problem where one seeks to maximize a~subset inducing a~graph of low treewidth satisfying a~prescribed \cmsot sentence.
+Fix a~positive integer $t$, a~\cmsot sentence $\varphi$, and define:
+\problemTask{$(\tw \leqslant t,\varphi)$-\textsc{Weighted Maximum Induced Subgraph} ($(\tw \leqslant t,\varphi)$-\textsc{WMIS})}
+{A vertex-weighted graph $(G,w)$.}
+{Find a set $S \subseteq V(G)$, such that
+\begin{compactitem}
+\item $G[S] \models \varphi$,
+\item $\tw(G[S]) \leqslant t$, and
+\item $S$ is of maximum weight subject to these conditions,
+\end{compactitem}
+or conclude that no such set $S$ exists.}
+
+Special cases of the $(\tw \leqslant t,\varphi)$-\textsc{WMIS} problem include \smis, \textsc{Feedback Vertex Set}, \textsc{Even Cycle Transversal}, \textsc{Weighted Linear Forest Vertex Deletion}. 
+For instance, the latter problem, which asks for a~deletion set of minimum weight leaving a~disjoint union of paths in the graph, is $(\tw \leqslant 1,\varphi_{\neg \text{deg}3})$-\textsc{WMIS} with \[\varphi_{\neg \text{deg}3} = \forall x \neg \left(\exists y_1 \exists y_2 \exists y_3~y_1 \neq y_2 \land y_1 \neq y_3 \land y_2 \neq y_3 \land E(x,y_1) \land E(x,y_2) \land E(x,y_3)\right).\]
+
+It was further conjectured that DMS more generally holds for $(\tw \leqslant t,\varphi)$-\textsc{WMIS}.
+
+\begin{solved-conjecture}[\textbf{Refuted}, Gartland--Lokshtanov~\cite{Gartland23}]\label{conj:GL2}
+  For every planar graph $H$, positive integer~$t$, and \cmsot sentence $\varphi$, $(\tw \leqslant t,\varphi)$-\textsc{Weighted Maximum Induced Subgraph} can be solved in polynomial time on $H$-induced-minor-free graphs.
+\end{solved-conjecture}
+
+\textbf{Resolved negatively, as a consequence of~\cite{BonnetC26}.}
+
+\medskip
+
+Again, we only expect the weakenings of~\cref{conj:GL2} to hold.
+Building on the frameworks of subtasks~\refnosec{subtask:1.1} and~\refnosec{subtask:1.2}, we want to determine which other logics could yield efficient algorithms in classes excluding a~planar induced minor, and to match our algorithms with tight conditional lower bounds.
+
+\begin{comment}
+The Pohoata--Davies grids (see~left of~\cref{fig:pd-grids}) form an important family in induced minor theory as they exclude a~small (classic) grid as an induced minor.
+Every graph obtained from a~Pohoata--Davies grid by
+\begin{compactitem}
+\item subdividing some edges that are not incident to high-degree vertices, and
+\item deleting for each high-degree vertex a~constant number of incident edges
+\end{compactitem}
+(see right of~\cref{fig:pd-grids}, where at~most~2 edges are removed per high-degree vertex) still excludes a~fixed planar graph as an induced minor.
+
+\begin{figure}[h!]
+\centering
+\begin{minipage}[t]{0.45\textwidth}
+\centering
+\begin{tikzpicture}[vertex/.style={draw,circle,inner sep=0.06cm}]
+	\def\k{6}
+	\pgfmathtruncatemacro\km{\k - 1}
+	\def\sv{0.5}
+	\def\sh{0.8}
+	
+	% vertices
+	\foreach \i in {1,...,\k}{
+		\foreach \j in {1,...,\k}{
+			\node[vertex] (a\i\j) at (\i * \sh, \j *\sv) {};
+		}
+	}
+	\foreach \i in {1,...,\k}{
+		\node[vertex] (s\i) at (\i * \sh, \k * \sv + \sv) {};
+	}
+	
+	% horizontal edges
+	\foreach \i [count = \ip from 2] in {1,...,\km}{
+		\foreach \j in {1,...,\k}{
+			\draw (a\i\j) -- (a\ip\j) ;
+		}
+	}
+	
+	% star edges
+	\foreach \i in {1,...,\k}{
+		\foreach \j in {1,...,\k}{
+			\draw (s\i) to [bend left = 24] (a\i\j) ;
+		}
+	}
+\end{tikzpicture}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.5\textwidth}
+\centering
+\begin{tikzpicture}[
+	vertex/.style={draw,circle,inner sep=0.06cm,fill=white},
+	subv/.style={draw,circle,inner sep=0.04cm,fill=white}
+]
+	\def\r{6}    % rows
+	\def\c{10}   % columns
+	\def\sv{0.5}
+	\def\sh{0.85}
+
+	% vertices a_{i,j} and star centers s_i
+	\foreach \i in {1,...,\c}{
+		\foreach \j in {1,...,\r}{
+			\node[vertex] (a\i\j) at (\i*\sh, \j*\sv) {};
+		}
+		\node[vertex] (s\i) at (\i*\sh, \r*\sv + \sv) {};
+	}
+
+	% horizontal edges (the row-paths)
+	\foreach \i in {1,...,9}{
+		\pgfmathtruncatemacro\ip{\i+1}
+		\foreach \j in {1,...,\r}{
+			\draw (a\i\j) -- (a\ip\j);
+		}
+	}
+        
+	\foreach \i/\j in {1/3,1/5,2/2,3/5,4/1,5/1,5/4,6/6,7/2,8/2,8/5,8/6,9/3,9/5}{
+		\pgfmathtruncatemacro\ip{\i+1}
+		\node[subv] (x\i\j) at ($(a\i\j)!0.5!(a\ip\j)$) {};
+	}
+
+	\foreach \j in {1,3,4,5,6} { \draw (s1)  to[bend left=24] (a1\j); }  
+	\foreach \j in {1,2,3,5,6} { \draw (s2)  to[bend left=24] (a2\j); } 
+	\foreach \j in {2,3,4,6}   { \draw (s3)  to[bend left=24] (a3\j); } 
+	\foreach \j in {1,4,5,6}     { \draw (s4)  to[bend left=24] (a4\j); }  
+	\foreach \j in {2,3,4,5,6} { \draw (s5)  to[bend left=24] (a5\j); }  
+	\foreach \j in {1,2,4,5,6} { \draw (s6)  to[bend left=24] (a6\j); }  
+	\foreach \j in {1,3,4,5}     { \draw (s7)  to[bend left=24] (a7\j); }  
+	\foreach \j in {1,2,3,5}   { \draw (s8)  to[bend left=24] (a8\j); }  
+	\foreach \j in {2,4,5,6}     { \draw (s9)  to[bend left=24] (a9\j); }  
+	\foreach \j in {1,2,3,4,6} { \draw (s10) to[bend left=24] (a10\j);}  
+\end{tikzpicture}
+\end{minipage}
+
+\caption{Left: the $6\times 6$ Pohoata--Davies grid. Right: an extension of a~$6 \times 10$ Pohoata--Davies grid.}
+\label{fig:pd-grids}
+\end{figure}
+
+These extensions of Pohoata--Davies grids are a~good place to find a~counterexample to~\cref{conj:GL2}.
+Again, the quasipolynomial and QPTAS weakenings of~\cref{conj:GL2} are significantly more believable.
+We wish to establish them, and the main difficulty surely resides in~proving q-DMS, or at least qptas-DMS.
+Techniques have been developed that lift qptas-DMS to the QPTAS variant of~\cref{conj:GL2} (see for instance~\cite{BonnetCMPR26}) and would likely apply.
+\end{comment}
+
+\subsubsection{General induced minors}\label{subsec:ind-min}
+
+For qptas-DMS, we conjecture that the condition that the excluded graph $H$ is planar can be lifted.
+
+\begin{conjecture}\label{conj:qptas-h-ind-min-f}
+For every graph $H$, \mis admits a~quasipolynomial-time approximation scheme in $H$-induced-minor-free graphs.
+\end{conjecture}
+
+Establishing \cref{conj:qptas-h-ind-min-f} in full generality would be a~major breakthrough.
+Indeed, on string graphs, a~QPTAS for \smis is only known when geometric representations of the string graphs are given, and this was itself a~celebrated result in computational geometry~\cite{AdamaszekHW19}.
+We suggest starting with special cases: for instance, non-represented string graphs.
+It can be noted that \cref{conj:qptas-h-ind-min-f} could even hold with a~polynomial-time approximation scheme (PTAS).
+Again, a~second step is to extend \cref{conj:qptas-h-ind-min-f} to $(\tw \leqslant t,\varphi)$-\textsc{WMIS} and other logics.
+
+An intriguing conjecture relates induced minors and twin-width (central in~Task~\refnosec{task:3}), and could reveal an unexpected connection between seemingly orthogonal notions, with potentially important consequences for some of the questions of~Tasks~\refnosec{task:2} and~\refnosec{task:3}.
+
+\begin{conjecture}\label{conj:ind-min-tww}
+  For every graph $H$ and every integer $t$, the graphs excluding $H$ as an induced minor and $K_{t,t}$ as a~subgraph have twin-width $\Oh_{H,t}(1)$. 
+\end{conjecture}
+
+Graphs satisfying the precondition of~\cref{conj:ind-min-tww} have \emph{polynomial expansion}, i.e., their $n$-vertex (induced) subgraphs have balanced separators of size $\Oh(n^{1-\varepsilon})$ for some constant $\varepsilon > 0$.
+It is another (a~priori harder) open question whether every class with polynomial expansion has bounded twin-width. 
+
+Finally, we are interested in detecting induced minors.
+While there is now an almost-linear algorithm to find a~fixed \emph{minor}~\cite{KorhonenPS24}, some fixed graphs are NP-hard to find as induced minors (see the recent works~\cite{KorhonenL24,AboulkerBPT25}).
+A~full classification of which induced minors can be found in polynomial time is currently beyond reach.
+However, within bounded-degree graphs, we conjecture that this characterizes string graphs.
+
+\begin{conjecture}\label{conj:bd-ind-min-detection}
+  For every graph $H$, deciding whether a~graph from a~bounded-degree class admits $H$ as an induced minor is polynomial-time solvable if and only if $H$ is a~string graph.
+\end{conjecture}
+
+Our approach for the algorithmic side of~\cref{conj:bd-ind-min-detection} relies on a~conjecture on unavoidable induced minors of graphs with bounded maximum degree and unbounded clique minors (ongoing work), and efficient model checking of an extension of \fosdp in $K_t$-minor-free graphs (see~subtask~\refnosec{subtask:1.1}). 
+For the complexity side, we plan on harnessing the reductions in~\cite{AboulkerBPT25}.
+
+\subsection{Task 3: Optimality program in monadically dependent classes}\label{task:3}
+
+Since Courcelle's theorems, the frontier of tractability for \mso~model checking has been well understood: it essentially coincides with \emph{bounded clique-width} for adjacency relations (\msoo)~\cite{CourcelleMR00}, and \emph{bounded treewidth} for incidence relations (\msot)~\cite{Courcelle90}.
+The first-order counterpart of these theorems is a~central open question, and has attracted substantial attention over the last decade.
+A class is \emph{monadically dependent} if it cannot be transformed into the class of all graphs by a first-order transformation, called an \fo transduction (see for instance~\cite{BonnetBEGMPPT25}).
+This notion encompasses, for example, classes of bounded twin-width and nowhere dense classes.
+It is conjectured that every monadically dependent class admits efficient \fo model checking, while the converse is known for hereditary classes~\cite{DreierMT24}. 
+
+\begin{conjecture}\label{conj:fo-fpt}
+Every monadically dependent class is tractable for \fo.
+\end{conjecture} 
+
+If true, monadic dependence would exactly characterize \fo tractability.
+An important step toward~\cref{conj:fo-fpt} came in 2020 with the introduction of twin-width~\cite{twin-width1}.
+Classes of bounded twin-width are monadically dependent.
+They include various families, such as classes of bounded clique-width, minor-free classes, proper permutation classes, but do not include all bounded-degree classes.
+The first algorithmic application was progress toward~\cref{conj:fo-fpt}.
+
+\begin{theorem}[\cite{twin-width1}]\label{thm:tww-fomc}
+  There is an algorithm that decides $G \models \varphi$ in time $\Oh_{d,k}(n)$ for every $n$-vertex graph~$G$ given together with a~$d$-sequence, and every first-order sentence $\varphi$ of quantifier rank~$k$.
+\end{theorem}
+
+In 2025, the family of merge-width parameters was introduced~\cite{DreierT25}.
+Classes of bounded merge-width unify bounded twin-width and bounded-degree graphs, and in fact cover classes of bounded expansion.
+A cubic-time \fo model checking algorithm was obtained for classes of effectively bounded merge-width, and was recently improved to quadratic time. 
+
+\begin{theorem}[\cite{DreierT25,BonnetGKM26}]\label{thm:mw-fomc}
+  Fix $d, k \in \mathbb N$.
+  For some $r = \Oh_k(1)$, there is an algorithm that decides $G \models \varphi$ in time $\Oh_{d,k}(n^2)$ for every $n$-vertex graph $G$ given together with a~construction sequence witnessing $\mw_r(G) \leqslant d$, and every first-order sentence $\varphi$ of quantifier rank~$k$.
+\end{theorem}
+
+(In~\cref{thm:mw-fomc}, $\mw_r(G)$ denotes the radius-$r$ merge-width of~$G$.)
+The community's strong focus on~\cref{conj:fo-fpt} has overshadowed other important questions in algorithms for structured graph classes.  
+We propose several such questions in fine-grained complexity, approximation algorithms, and dynamic algorithms.
+These questions fit naturally within the broader optimality program.
+They may also shed a~different light on monadically dependent classes than the one provided by the pursuit of~\cref{conj:fo-fpt} (see for instance~\cite{DreierMT24}).
+
+\subsubsection{Fine-grained complexity and approximability}\label{subsec:fgc-tww-mw}
+
+In both \cref{thm:tww-fomc,thm:mw-fomc}, the dependence on $k$ is a~tower of exponentials of height~$\Theta(k)$.
+In classes of bounded twin-width, single-exponential parameterized algorithms have been obtained for several problems including \textsc{$k$-Independent Set} and \textsc{$k$-Dominating Set} \cite{twin-width3}.
+Algorithms with similar running times are not known in classes of effectively bounded merge-width.
+
+\begin{question}\label{q:k-is-mw}
+  For some $r = \Oh_k(1)$, is there an algorithm that solves \textsc{$k$-Independent Set} in time $2^{\Oh_d(k)}\,n^{\Oh(1)}$ on $n$-vertex graphs $G$ given with a~construction sequence witnessing that $\mw_r(G) \leqslant d$?
+\end{question}
+
+We are especially interested in a parameterized algorithm with linear dependence on~$n$, since \cref{thm:mw-fomc} is only quadratic in~$n$.
+A~promising direction is to combine the dynamic programming approach of~\cite{twin-width3} with the freezing technique for merge-width sequences developed in~\cite{Bonamy25}.
+We ask \cref{q:k-is-mw} because \textsc{$k$-Independent Set} is arguably the simplest NP-hard \fo-definable problem.
+A~positive answer would likely lead to fast parameterized algorithms for many other problems, as happened in the case of~twin-width.
+
+On graphs of effectively bounded twin-width, these parameterized algorithms do not perfectly match the current ETH lower bounds.
+Relying on the fact that $\Theta(\log n)$-subdivisions of $n$-vertex graphs have bounded twin-width, it is known that several problems, including \textsc{$k$-Independent Set} and \textsc{$k$-Dominating Set}, cannot be solved in time $2^{o(k/\log k)} n^{\Oh(1)}$, unless the ETH fails. 
+Moreover, the corresponding unparameterized problems (\smis, \textsc{Dominating Set}, etc.) admit a~$2^{\Omega(n/\log n)}$ ETH lower bound in classes of bounded twin-width.
+For no problem has this gap been closed against the trivial $2^{\Oh(n)}$ upper bound.  
+
+\begin{question}\label{q:tww-small-gap}
+For every problem $\Pi$ with a~$2^{\Theta(n)}$-time algorithm on general graphs, optimal under the ETH, is there a~$2^{\Oh(n/\log n)}$-time algorithm that solves $\Pi$ on $n$-vertex graphs of bounded twin-width?
+Or is there such a~problem with a~$2^{\Omega(n)}$ ETH lower bound on bounded twin-width graphs?
+\end{question}
+
+If we find a~problem positively answering the first question of~\cref{q:tww-small-gap}, we will naturally try and extend it to all \mso-definable problems.
+We suspect that the main obstacle behind this question lies in the growth rate of bounded twin-width classes: they have, up to isomorphism, only $2^{\Oh(n)}$ many $n$-vertex graphs.
+This may point to a deeper connection between computation and enumerative combinatorics, like a~quantified version of Mahaney's theorem. 
+
+\mis is notoriously hard to approximate: For every $\varepsilon > 0$, it is NP-hard to approximate \smis on $n$-vertex graphs within an approximation factor of~$n^{1-\varepsilon}$~\cite{Hastad96,Zuckerman07}.
+The best known polynomial-time algorithms achieve approximation ratio~$n/\text{polylog}~n$.
+In \emph{subgraph-closed} monadically dependent classes, which coincide with nowhere dense classes, an $n^{o(1)}$-approximation algorithm follows readily from their $n^{o(1)}$-degeneracy.   
+The same result was established for classes of effectively bounded twin-width~\cite{BergeBDW23}.
+We conjecture that this holds for every monadically dependent class.
+
+\begin{conjecture}\label{conj:mis-approx}
+  For every monadically dependent class $\mathcal C$, \mis admits, for every $\varepsilon > 0$, a~polynomial $n^\varepsilon$-approximation algorithm on $n$-vertex graphs of~$\mathcal C$.
+\end{conjecture}
+
+A~natural first step toward~\cref{conj:mis-approx} is to treat classes of effectively bounded merge-width.
+Currently, no approximation algorithm with a~better approximation factor than on general graphs is known.
+
+\begin{question}\label{q:mis-approx-mw}
+  Does \mis admit an $n^c$-approximation algorithm on classes of effectively bounded merge-width with $c<1$? Does it admit an $n^{o(1)}$-approximation algorithm?
+\end{question}
+
+Can an algorithm for~\cref{q:mis-approx-mw} then be lifted to classes of subpolynomial merge-width (which are conjectured to coincide with monadically dependent classes)?
+For classes of bounded twin-width, even a PTAS is not currently ruled out.
+  
+\begin{solved-question}[\textbf{solved}]\label{q:mis-approx-tww}
+  Is there a~polynomial $r(n)$-approximation algorithm for \mis in classes of effectively bounded twin-width, with $r(n)$ at~most~polylogarithmic? 
+\end{solved-question}
+
+\textbf{Solved negatively: there is a constant $c$ such that an $\bm{n^{c/(\log \log n)^2}}$-approximation algorithm for this problem would refute the ETH~\cite{BonnetDD26}. This is close to the upper bound of $\bm{n^{\Oh(1/log \log n)}}$ on the best approximation factor~\cite{BergeBDW23}.}
+
+\medskip
+
+Failing a~PTAS, we would seek a~matching conditional lower bound for~\cref{q:mis-approx-tww}. 
+
+The \maxfo model-checking problem asks, given a~graph $G$ and an \fo sentence $\varphi$ on the language $\{E,X\}$ where $E$ is interpreted as the edge set, and $X$ as a~vertex subset, to find a maximum-size set $S \subseteq V(G)$ such that $G, S \models \varphi$.
+Let \monmaxfo denote the fragment of \maxfo such that for every $S' \subseteq S$, if $G, S \models \varphi$ holds then so does $G, S' \models \varphi$.
+Note that \cite{Dawar06} introduces a syntactically more restrictive notion of \monmaxfo, in which $X$ may appear only negatively.
+(Indeed, these notions are not equivalent, since Lyndon’s theorem fails over finite structures.)
+One can also add vertex weights to~$G$, and seek a~set $S$ of maximum total weight.
+
+\begin{conjecture}\label{conj:maxfo-approx}
+  For every monadically dependent class $\mathcal C$, \monmaxfo model checking admits, for every $\varepsilon > 0$, a~polynomial $n^\varepsilon$-approximation algorithm on $n$-vertex graphs of~$\mathcal C$.
+\end{conjecture}
+
+The monotonicity assumption is needed because there is a~polynomial reduction from \textsc{Planar 3-Coloring} to \maxfo model checking on planar graphs (it is claimed in~\cite[Example 11]{Dawar06}, and not difficult to show).  
+A~related question appears in~\cite{Dvorak22}, where \cref{conj:maxfo-approx} is formulated for nowhere dense classes and a~version of \monmaxfo where several unary relations are allowed (instead of a~single one).
+%The next step is a~strengthening of \cite[Problem 7]{Dvorak22} using the same logic.
+The recent characterization of monadic dependence by flip-separability~\cite{BonnetBEGMPPT25} is a~promising starting point, but proving~\cref{conj:maxfo-approx} will require substantial new work.
+Its special case, \cref{conj:mis-approx}, is wide open, even on classes of effectively bounded merge-width.
+%Intermediate results toward these conjectures would already be valuable in their own right.
+
+\subsubsection{Faster polynomial algorithms in monadically dependent classes and beyond}\label{subsec:alg-stm}
+
+Very recently, sparse signed tree models were used to obtain polynomial algorithms on classes of bounded twin-width or merge-width that are much faster than in general graphs~\cite{BonnetGKM26}.
+Importantly, these algorithms do \emph{not} require witness sequences for low twin-width or merge-width.
+
+%Signed tree models~\cite{sddegSTM} generalize tree models, which were introduced in the context of twin-width~\cite{twin-width3}.
+%A~pair of vertices of a~rooted tree $T$ is a~\emph{transversal pair} of $T$ if neither one of the pair is an ancestor of the other.
+Two pairs of nodes $u_1v_1, u_2v_2$ in a~tree \emph{cross} if one of $u_1, v_1$ is a~strict ancestor of one of $u_2, v_2$, and vice versa. 
+A~\emph{signed tree model} is a~triple $\mathcal T=(T, A, B)$ consisting of a~full binary tree $T$, and two disjoint sets of transversal pairs $A$ and $B$ of $T$ such that no two pairs in $A \cup B$ cross.
+The transversal pairs of $A$ and $B$ are called \emph{negative edges} and \emph{positive edges}, respectively.
+We say that a~transversal pair $u'v'$ \emph{covers} a~pair $uv$ (not necessarily in $A \cup B$) if $u'$ is an ancestor of $u$, $v'$ is an ancestor of $v$, and there is no transversal pair $u''v''$ lower than $u'v'$ with the same property. 
+The graph $G_{\mathcal T}$ represented by $\mathcal T$ has as vertex set the leaves of~$T$, and an edge $uv$ whenever $uv$ is covered by a~positive edge in~$\mathcal T$; see~\cref{fig:signed-tree-model}.
+\begin{figure}[!ht]
+  \centering
+  \begin{tikzpicture}[%
+    scale=1.1,
+    level distance=10mm,
+    level 1/.style={sibling distance=32mm},
+    level 2/.style={sibling distance=16mm},
+    level 3/.style={sibling distance=8mm},
+    level 4/.style={sibling distance=4mm},
+    every node/.style={draw, circle, inner sep=2pt, font=\footnotesize},
+    edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}
+  ]
+  \node (root) {}
+    child {node (a) {}
+      child {node (b) {}
+        child {node (c) {}
+          child {node (c1) [label=below:{1}] {}}
+          child {node (c2) [label=below:{2}] {}}
+        }
+        child {node (d) [label=below:{3}] {}}
+      }
+      child {node (e) {}
+        child {node (f) {}
+          child {node (f1) [label=below:{4}] {}}
+          child {node (f2) [label=below:{5}] {}}
+        }
+        child {node (g) {}
+          child {node (g1) [label=below:{6}] {}}
+          child {node (g2) [label=below:{7}] {}}
+        }
+      }
+    }
+    child {node (h) {}
+      child {node (i) {}
+        child {node (j) {}
+          child {node (j1) [label=below:{8}] {}}
+          child {node (j2) [label=below:{9}] {}}
+        }
+        child {node (k) [label=below:{10}] {}}
+      }
+      child {node (l) {}
+        child {node (m) {}
+          child {node (m1) [label=below:{11}] {}}
+          child {node (m2) [label=below:{12}] {}}
+        }
+        child {node (n) {}
+          child {node (n1) [label=below:{13}] {}}
+          child {node (n2) [label=below:{14}] {}}
+        }
+      }
+    };
+
+    % transversal anti-edges
+    \foreach \i/\j/\b in {a/n/15, c2/k/0, c2/d/0}{
+      \draw[very thick, amber] (\i) to [bend left=\b] (\j);
+    }
+
+    \draw[very thick, amber] (i) to node[midway, above, inner sep=1pt, draw=none] {$e_2$} (e);
+    
+    % transversal edges (blue)
+    \foreach \i/\j/\b in {e/k/0, g1/g2/0, m1/m2/0, m2/n/0, f1/g/0, n/i/0, c/d/0}{
+       \draw[very thick, blue] (\i) to [bend left=\b] (\j);
+     }
+
+    % labeled blue edges e_1 and e_3
+\draw[very thick, blue] (f) to [bend left=28] node[midway, above, inner sep=1pt, draw=none] {$e_1$} (j);
+\draw[very thick, blue] (a) to [bend left=0] node[midway, above, inner sep=1pt, draw=none] {} (h);
+
+    %\draw[very thin, dashed, red] (b) -- (h) ; 
+\end{tikzpicture}
+  \caption{A~signed tree model with~$A$ in amber and~$B$ in blue.
+    %The topmost amber edge and the dashed red edge cross.
+    Vertex 4 is adjacent to 8 because 4,8 is covered by the positive edge $e_1 \in B$, while 6 is non-adjacent to 8 because 6,8 is covered by $e_2 \in A$.}
+\label{fig:signed-tree-model}
+\end{figure}
+A~signed tree model is \emph{sparse} (resp.~\emph{almost sparse}) if the total number of transversal pairs is at~most~$\Oh(n)$ (resp.~$n^{1+o(1)}$), where $n$ is the number of leaves.
+
+Sparse signed tree models are related to two parameters: symmetric difference and sd-degeneracy.
+The \emph{symmetric difference} of two vertices $u, v$ in a~graph $G$ is $\sd_G(u,v) := |(N_G(u) \setminus \{v\}) \triangle (N_G(v) \setminus \{u\})|$.
+The \emph{symmetric difference} $\sd(G)$ of a~graph $G$ is the least~$d$ such that for every non-singleton induced subgraph $H$ of~$G$, there are $u \neq v \in V(H)$ with $\sd_H(u,v) \leqslant d$.
+An~\emph{sd-degeneracy sequence} of $G$ of width~$d$ is a~list of pairs of vertices of $G$: $(u_1, v_1),$ $\ldots, (u_{n-1},v_{n-1})$ such that $u_i \neq v_i$ for every $i \in [n-1]$, $V(G) = \{u_1, u_2, \ldots, u_{n-2},$ $u_{n-1}, v_{n-1}\}$, there is no $i < j$ such that $u_i \in \{u_j, v_j\}$, and $\max_{i \in [n-1]} \sd_{G - \{u_1, u_2, \ldots, u_{i-1}\}}(u_i,v_i) \leqslant d$.
+The \emph{sd-degeneracy} of~$G$ is the least~$d$ such that it admits an sd-degeneracy sequence of width~$d$.
+
+One can efficiently find sd-degeneracy sequences of low width in graphs of bounded twin-width. 
+
+\begin{theorem}\label{thm:vers-tww-to-sd}
+  There is an algorithm that, given an $n$-vertex $m$-edge graph $G$ of twin-width at~most~$d$, outputs an~sd-degeneracy sequence of width $\Oh_d(\log n)$, in time $\Oh_d((m+n) \log n)$ with high probability.
+\end{theorem}
+
+In turn, sd-degeneracy sequences can be quickly converted into signed tree models.
+
+\begin{lemma}[\cite{BonnetGKM26}]\label{lem:sd-degen-to-stm}
+  There is an $\Oh(dn+|E(G)|)$-time algorithm that, given an sd-degeneracy sequence of~$G$ of width~$d$, outputs a~signed tree model of~$G$ with $\Oh(dn)$ transversal pairs.  
+\end{lemma}
+
+Now operating on the signed tree models, one can design fast algorithms on graphs of bounded twin-width, \emph{without} requiring that a~contraction sequence is provided.
+
+\begin{theorem}[\cite{BonnetGKM26}]\label{thm:APSP-tww}
+  \textsc{All-Pairs Shortest Path} can be solved in $\Oh(n^2 \log^2 n)$ time in $n$-vertex graphs of bounded twin-width. 
+\end{theorem}
+
+%The fastest algorithm for \emph{general} unweighted undirected graphs takes $\Oh(n^\omega \log n)$ time~\cite{Seidel95}, where $\omega$ is the matrix-multiplication time exponent, currently at $2.371339$~\cite{Alman25}, and no purely combinatorial truly subcubic algorithm is known.
+Solving \textsc{All-Pairs Shortest Path} answers most distance-based problems such as \textsc{Diameter}, \textsc{Radius}, \textsc{Eccentricity}, \textsc{Wiener Index}, etc.
+
+\begin{theorem}[\cite{BonnetGKM26}]\label{thm:mat-mult-tww}
+  Given any adjacency matrix $M$ of an $n$-vertex graph of bounded twin-width and any $n \times n$ matrix $N$ over some additive group, the product $MN$ can be computed in time $\Oh(n^2 \log n)$. 
+\end{theorem}
+
+\Cref{thm:APSP-tww} is in fact a~consequence of:
+
+\begin{theorem}\label{thm:sssp-stm}
+  There is an $\Oh(p \log n)$-time algorithm that, given a~signed tree model with $p$ transversal pairs of an $n$-vertex graph $G$ and $v \in V(G)$, outputs a~shortest-path tree of~$G$ rooted at~$v$.
+\end{theorem}
+
+%When a~construction sequence is provided as part of the input, a~faster algorithm than~\cref{thm:APSP-tww} is achieved on the more general graphs of bounded (radius-1) merge-width: 
+%\begin{theorem}[\cite{BonnetGKM26}]\label{thm:APSP-mw}
+%  There is an algorithm that, given a construction sequence of an $n$-vertex graph~$G$ witnessing $\mw_1(G) \leqslant d$, solves \textsc{All-Pairs Shortest Path} on $G$ in $\Oh(d n^2 \log n)$.
+%\end{theorem}
+
+This raises several questions.
+
+\begin{solved-question}[\textbf{solved}]\label{q:APSP-tww}
+  Can \textsc{All-Pairs Shortest Path} be solved in $\Oh(n^2)$ time in $n$-vertex graphs of bounded twin-width? What about bounded merge-width? 
+\end{solved-question}
+
+\textbf{Solved positively: more generally for classes of linear neighborhood complexity~\cite{BonnetDPST26}.}
+
+\medskip
+
+Such an algorithm is currently known only when an $\Oh(1)$-sequence is provided~\cite{Bannach24}.
+Interestingly, a~positive answer to~\cref{q:APSP-tww} is matched by the following SETH lower bound even for \textsc{Diameter} on $\Oh(n)$-edge graphs: for every $\varepsilon > 0$, there is no $\Oh(n^{2-\varepsilon})$-time algorithm.
+In particular, an $\Tilde{\Oh}(m)$-time algorithm for \textsc{Diameter} in $m$-edge graphs of bounded twin-width is ruled out.
+
+\begin{solved-question}[\textbf{solved}]\label{q:mat-mult-tww}
+  Given any adjacency matrix $M$ of an $n$-vertex graph of bounded twin-width (resp.~of bounded merge-width) and any $n \times n$ matrix $N$ over some additive group, can the product $MN$ be computed in time $\Oh(n^2)$? 
+\end{solved-question}
+
+\textbf{Solved positively: more generally for classes of linear neighborhood complexity~\cite{BonnetDPST26}.}
+
+\medskip
+
+A~positive answer in particular gives a~time-optimal algorithm for \textsc{Triangle Detection} in dense graphs of bounded twin-width (resp.~merge-width).
+Indeed, an algorithm for~\cref{q:mat-mult-tww} can be used to compute the square or any constant power of a~graph.
+Unlike for \textsc{Diameter}, no analogous conditional lower bound rules out faster algorithms for \textsc{Triangle Detection/Counting} in structured sparse graphs.
+
+\begin{solved-question}[\textbf{solved}]\label{q:triangle-detection-tww}
+  Can \textsc{Triangle Detection} (or \textsc{Triangle Counting}) be solved in time $\Tilde{\Oh}(m)$ in $m$-edge graphs of bounded twin-width? What about bounded merge-width?
+\end{solved-question}
+
+\textbf{Solved positively: more generally for classes of linear neighborhood complexity, and more generally for detecting a~clique of size 3, 4, or 5~\cite{BonnetDPST26}. Actually the triangle-detection algorithm takes $\Oh(m)$ without log factors.}
+
+\medskip
+
+In general graphs, the current best algorithm runs in time $\Tilde{\Oh}(m^{2\omega/(\omega+1)})=\Oh(m^{1.407})$, and the best combinatorial algorithm runs in time $\Oh(m^{3/2})$.
+
+Every monadically dependent class has almost sparse signed tree models.
+On the other hand, some monadically \emph{independent} graph classes still admit sparse signed tree models.
+This is the case, for instance, for classes of bounded symmetric difference and for interval graphs.
+\Cref{q:APSP-tww,q:mat-mult-tww,q:triangle-detection-tww} can be asked, with some multiplicative polylogarithmic factors, on every such class.
+It is thus relevant to try and characterize classes with (almost) sparse signed tree models, or at least to classify the established graph classes.
+
+\begin{question}\label{q:stm-char}
+  Which classes have (almost) sparse signed tree models? 
+\end{question}
+
+\textbf{Remark: within monotone classes, having sparse signed tree models is equivalent to having bounded degeneracy.}
+
+\medskip
+
+By a~counting argument, a~class with sparse signed tree models must be \emph{factorial}, i.e., its number of $n$-vertex graphs must be $2^{\Oh(n \log n)}$.
+It is challenging, however, to find a~factorial class without sparse signed tree models.
+
+\begin{solved-question}[\textbf{solved}]\label{q:stm-factorial}
+  Is there a~hereditary factorial class without sparse signed tree models?
+\end{solved-question}
+
+\textbf{An earlier paper \cite{BannachMT24} showed that yes for sparse tree models, but the same holds for signed tree models due to the anti-edge removal of~\cite{BonnetGKM26}.}
+
+\medskip
+
+We believe that permutation graphs or 2-track interval graphs should answer~\cref{q:stm-factorial}.
+
+Then, the question is which of these classes admit an efficient (say, almost-linear-time) algorithm to compute the signed tree models.
+Recall that, by~\cref{lem:sd-degen-to-stm}, it suffices to compute an sd-degeneracy sequence of bounded width.
+
+\begin{solved-question}[\textbf{partially solved}]\label{q:eff-stm}
+  For which classes $\mathcal C$ is there an algorithm that, given a~graph $G \in \mathcal C$ of size~$m$, computes an (almost) sparse signed tree model of~$G$ in time $\Tilde{\Oh}(m)$?
+\end{solved-question}
+
+\textbf{There are randomized $\Tilde{\Oh}(m)$-time and deterministic $\Oh(n^2)$-time algorithms for classes of linear neighborhood complexity \cite{BonnetDPST26}.}
+
+\medskip
+
+Signed tree models can be used to greatly improve, for structured graph classes, the dynamic guarantees achievable for general graphs.
+We view the following result as a~proof of concept that could be strengthened and extended to other classes and problems.
+
+\begin{theorem}[\cite{BonnetGKM26}]\label{thm:tww-dynamic-sssp}
+  Let $\mathcal C$ be a~class of bounded twin-width.
+  There is a~fully dynamic randomized algorithm for \textsc{Single-Source Shortest Paths} on graphs guaranteed to stay in $\mathcal C$, with $\Oh(n)$ amortized update time, and $\Oh(n \log n)$ worst-case query time.
+
+  Knowing in advance that the number of edits is $\Oh(n \log n)$, the update time becomes $\Oh(1)$ worst-case.
+\end{theorem}
+
+%\bibliographystyle{abbrv}
+%\bibliography{biblio-old}
+
+\bibliographystyle{openabbrv3}
+\bibliography{biblio}
+
+\end{document}
+

@@ -1,0 +1,572 @@
+:root {
+  color-scheme: light;
+  --paper: #f2f0ea;
+  --ink: #171816;
+  --muted: #6d6c67;
+  --expansion: #92918c;
+  --line: rgba(23, 24, 22, 0.2);
+  --night: #171816;
+  --night-ink: #f4f2ec;
+  --night-muted: #a7a8a1;
+  --night-line: rgba(244, 242, 236, 0.2);
+  --page-gutter: clamp(1.25rem, 4vw, 4.5rem);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 10;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.7rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 0.75rem;
+  text-decoration: none;
+  transform: translateY(-180%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.banner {
+  height: clamp(10.5rem, 16vw, 13.5rem);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 1.25rem var(--page-gutter) 1rem;
+  overflow: hidden;
+}
+
+.banner-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.banner-label,
+.section-nav {
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.section-nav {
+  display: flex;
+  gap: clamp(1.25rem, 2.5vw, 2.5rem);
+}
+
+.section-nav a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.section-nav a:hover,
+.section-nav a:focus-visible {
+  color: var(--ink);
+}
+
+.wordmark {
+  align-self: center;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.wordmark-visual {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  white-space: nowrap;
+  font-family: Baskerville, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(3.5rem, 10.5vw, 8.75rem);
+  line-height: 0.86;
+  letter-spacing: -0.045em;
+}
+
+.term {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.term + .term,
+.connector + .term {
+  margin-left: 0.075em;
+}
+
+.initial {
+  display: inline-block;
+}
+
+.opal-letter {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 0.45em;
+  height: 0.7em;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #111;
+}
+
+.opal-letter img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.075);
+  filter: saturate(0.88) contrast(1.06);
+}
+
+.suffix,
+.connector {
+  position: relative;
+  top: -0.03em;
+  font-family: Inter, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.105em;
+  font-weight: 560;
+  letter-spacing: 0.015em;
+  line-height: 1;
+  color: var(--expansion);
+}
+
+.suffix {
+  margin-left: 1em;
+}
+
+.term-opal .suffix {
+  margin-left: -0.05em;
+}
+
+.term-opal {
+  transform: translateX(-0.05em);
+}
+
+.term-program .suffix {
+  margin-left: -1.8em;
+}
+
+.term.term-program {
+  margin-left: -0.018em;
+}
+
+.term-program + .connector {
+  margin-left: 0.2em;
+}
+
+.term-algorithms .suffix {
+  margin-left: 0;
+  top: -5.9em;
+  transform: translateX(-1.65em);
+}
+
+.term-logics .suffix {
+  margin-left: 0.62em;
+}
+
+.term-logics {
+  transform: translateX(-0.287em);
+}
+
+.connector {
+  margin-left: 0.75em;
+  color: var(--expansion);
+}
+
+.connector-and {
+  font-size: 0.105em;
+  margin-left: 0.25em;
+  top: -5.9em;
+  transform: translateX(-1.65em);
+}
+
+.members {
+  padding: clamp(2rem, 3.5vw, 3.5rem) var(--page-gutter) clamp(1rem, 2vw, 2rem);
+  background: var(--night);
+  color: var(--night-ink);
+}
+
+.introduction {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: clamp(2rem, 6vw, 6rem);
+  padding: clamp(2rem, 3vw, 3rem) var(--page-gutter);
+  border-top: 1px solid var(--line);
+}
+
+.introduction p {
+  margin: 0;
+}
+
+.introduction-context,
+.introduction-directions {
+  max-width: none;
+  font-family: Baskerville, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(1.35rem, 2.5vw, 2.5rem);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+}
+
+.introduction-context {
+  grid-column: 1 / -1;
+  margin-bottom: 0.34em !important;
+  white-space: nowrap;
+}
+
+.introduction-directions {
+  grid-column: 1;
+}
+
+.introduction-direction {
+  display: block;
+}
+
+.introduction-direction {
+  white-space: nowrap;
+}
+
+.project-download {
+  grid-column: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  min-width: 14rem;
+  padding: 0.95rem 1.1rem;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.11em;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: uppercase;
+  transform: translateY(0.45rem);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.download-arrow {
+  font-size: 1rem;
+  transition: transform 160ms ease;
+}
+
+.project-download:hover,
+.project-download:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.project-download:hover .download-arrow,
+.project-download:focus-visible .download-arrow {
+  transform: translateY(0.18rem);
+}
+
+.members h2,
+.content-section h2 {
+  margin: 0;
+  font-family: Baskerville, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(2.25rem, 4.25vw, 4rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+}
+
+.members h2 {
+  padding-bottom: clamp(2.25rem, 4vw, 4rem);
+}
+
+#meetings,
+#publications {
+  scroll-margin-top: 1rem;
+}
+
+#people {
+  scroll-margin-top: 0;
+}
+
+.labs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3vw, 3rem);
+}
+
+.lab {
+  border-top: 1px solid var(--night-line);
+}
+
+.lab-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 0 2.2rem;
+}
+
+.lab-heading h3,
+.lab-heading p {
+  margin: 0;
+}
+
+.lab-heading h3 {
+  font-size: 0.76rem;
+  letter-spacing: 0.13em;
+}
+
+.lab-heading h3 a {
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  transition: text-decoration-color 160ms ease;
+}
+
+.lab-heading h3 a:hover,
+.lab-heading h3 a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.lab-heading p {
+  color: var(--night-muted);
+  font-size: 0.7rem;
+}
+
+.people-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.people-list li {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.15rem 0 1.2rem;
+  border-bottom: 1px solid var(--night-line);
+}
+
+.person-name {
+  width: fit-content;
+  color: inherit;
+  font-family: Baskerville, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  letter-spacing: -0.015em;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 160ms ease;
+}
+
+.person-name:hover,
+.person-name:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.person-role {
+  color: var(--night-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.035em;
+  line-height: 1.4;
+}
+
+.content-section {
+  padding: clamp(4rem, 8vw, 8rem) var(--page-gutter);
+}
+
+.meetings {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) 2fr;
+  align-items: end;
+  gap: 2rem;
+  min-height: 22rem;
+}
+
+.placeholder {
+  margin: 0 0 0.45rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.publications {
+  padding-top: clamp(2rem, 3.5vw, 3.5rem);
+  background: var(--night);
+  color: var(--night-ink);
+}
+
+.publications h2 {
+  padding-bottom: clamp(2.5rem, 5vw, 5rem);
+}
+
+.publication-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.publication-list li {
+  padding: clamp(1.15rem, 1.8vw, 1.75rem) 0;
+  border-top: 1px solid var(--night-line);
+}
+
+.publication-authors,
+.publication-venue {
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.publication-citation p {
+  margin: 0;
+}
+
+.publication-authors {
+  font-weight: 400;
+  letter-spacing: 0.025em;
+}
+
+.publication-authors strong {
+  font-weight: 750;
+}
+
+.publication-title {
+  margin-top: 0.45rem !important;
+  font-family: Baskerville, "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
+  font-size: clamp(0.84rem, 1.55vw, 1.4rem);
+  letter-spacing: -0.012em;
+  line-height: 1.08;
+  white-space: nowrap;
+}
+
+.publication-title a {
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 160ms ease;
+}
+
+.publication-title a:hover,
+.publication-title a:focus-visible {
+  text-decoration-color: currentColor;
+}
+
+.publication-venue {
+  margin-top: 0.45rem !important;
+  color: var(--night-muted);
+}
+
+@media (max-width: 760px) {
+  .banner {
+    height: 11rem;
+  }
+
+  .banner-top {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .section-nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.75rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+  }
+
+  .wordmark-visual {
+    justify-content: flex-start;
+    font-size: clamp(2.8rem, 13.5vw, 3.5rem);
+  }
+
+  .introduction {
+    grid-template-columns: 1fr;
+  }
+
+  .introduction-context,
+  .introduction-directions {
+    grid-column: 1;
+    font-size: 1.75rem;
+  }
+
+  .introduction-context,
+  .introduction-direction {
+    white-space: normal;
+  }
+
+  .project-download {
+    grid-column: 1;
+    justify-self: start;
+    margin-top: 1.75rem;
+    transform: none;
+  }
+
+  .labs {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+
+  .meetings {
+    grid-template-columns: 1fr;
+  }
+
+  .meetings {
+    align-content: space-between;
+    min-height: 19rem;
+  }
+
+  .publication-title {
+    font-size: 1.35rem;
+    line-height: 1.1;
+    white-space: normal;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .person-name {
+    transition: none;
+  }
+
+  .section-nav a {
+    transition: none;
+  }
+
+  .lab-heading h3 a,
+  .publication-title a {
+    transition: none;
+  }
+
+  .project-download,
+  .download-arrow {
+    transition: none;
+  }
+}

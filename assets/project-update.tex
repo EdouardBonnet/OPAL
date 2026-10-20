@@ -902,9 +902,13 @@ Techniques have been developed that lift qptas-DMS to the QPTAS variant of~\cref
 
 For qptas-DMS, we conjecture that the condition that the excluded graph $H$ is planar can be lifted.
 
-\begin{conjecture}\label{conj:qptas-h-ind-min-f}
-For every graph $H$, \mis admits a~quasipolynomial-time approximation scheme in $H$-induced-minor-free graphs.
-\end{conjecture}
+\begin{solved-conjecture}[\textbf{Solved}]\label{conj:qptas-h-ind-min-f}
+For every graph $H$, \mis admits a~quasipolyno\-mial-time approximation scheme in $H$-induced-minor-free graphs.
+\end{solved-conjecture}
+
+\textbf{Resolved positively, even for the more general classes with strongly edge-sublinear separators \cite{BonnetC26b}.}
+
+\medskip
 
 Establishing \cref{conj:qptas-h-ind-min-f} in full generality would be a~major breakthrough.
 Indeed, on string graphs, a~QPTAS for \smis is only known when geometric representations of the string graphs are given, and this was itself a~celebrated result in computational geometry~\cite{AdamaszekHW19}.
@@ -1019,7 +1023,7 @@ Currently, no approximation algorithm with a~better approximation factor than on
 Can an algorithm for~\cref{q:mis-approx-mw} then be lifted to classes of subpolynomial merge-width (which are conjectured to coincide with monadically dependent classes)?
 For classes of bounded twin-width, even a PTAS is not currently ruled out.
   
-\begin{solved-question}[\textbf{solved}]\label{q:mis-approx-tww}
+\begin{solved-question}[\textbf{Solved}]\label{q:mis-approx-tww}
   Is there a~polynomial $r(n)$-approximation algorithm for \mis in classes of effectively bounded twin-width, with $r(n)$ at~most~polylogarithmic? 
 \end{solved-question}
 
@@ -1179,7 +1183,7 @@ Solving \textsc{All-Pairs Shortest Path} answers most distance-based problems su
 
 This raises several questions.
 
-\begin{solved-question}[\textbf{solved}]\label{q:APSP-tww}
+\begin{solved-question}[\textbf{Solved}]\label{q:APSP-tww}
   Can \textsc{All-Pairs Shortest Path} be solved in $\Oh(n^2)$ time in $n$-vertex graphs of bounded twin-width? What about bounded merge-width? 
 \end{solved-question}
 
